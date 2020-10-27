@@ -70,3 +70,8 @@ tr {
 .card {
   width: 18rem;
 }
+
+ul {
+  list-style: none;
+  opacity: 0.3;
+}
