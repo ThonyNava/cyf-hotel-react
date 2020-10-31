@@ -1,6 +1,4 @@
-import React from "react";
-import { render } from "react-dom";
-import FakeBookings from "./data/fakeBookings.json";
+import React, { useState } from "react";
 import moment from "moment";
 
 let SearchResults = props => {
@@ -20,11 +18,21 @@ let SearchResults = props => {
         </tr>
       </thead>
       <tbody>
-        {FakeBookings.map((booking, i) => {
+        {props.results.map((booking, i) => {
+          const [highlighting, setHighlighting] = useState("");
+
+          let setTheHighlighting = () => {
+            if (highlighting) {
+              setHighlighting("");
+            } else {
+              setHighlighting("bg-info text-white");
+            }
+          };
+
           const checkIn = moment(booking.checkInDate);
           const checkOut = moment(booking.checkOutDate);
           return (
-            <tr key={i}>
+            <tr key={i} onClick={setTheHighlighting} className={highlighting}>
               <th scope="row">{booking.id}</th>
               <td>{booking.title}</td>
               <td>{booking.firstName}</td>

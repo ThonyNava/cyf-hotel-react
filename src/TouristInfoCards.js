@@ -5,7 +5,7 @@ let TouristInfoCards = props => {
     <div className="card mt-4 text-center">
       <img src={props.img} className="card-img-top" />
       <div className="card-body">
-        <a href={props.url} className="btn btn-primary">
+        <a href={props.url} className="btn btn-info">
           Go {props.name}
         </a>
       </div>

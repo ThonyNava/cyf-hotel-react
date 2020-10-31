@@ -73,5 +73,9 @@ tr {
 
 ul {
   list-style: none;
+  padding: 0;
+}
+
+footer ul {
   opacity: 0.3;
 }

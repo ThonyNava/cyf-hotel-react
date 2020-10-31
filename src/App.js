@@ -2,6 +2,7 @@ import React from "react";
 import Heading from "./Heading";
 import TouristInfoCards from "./TouristInfoCards";
 import Bookings from "./Bookings";
+import Restaurant from "./Restaurant";
 import Footer from "./Footer";
 import "./App.css";
 
@@ -9,7 +10,7 @@ const App = () => {
   return (
     <div className="App">
       <Heading />
-      <div className="container">
+      <div className="container text-center">
         <div className=" row d-flex justify-content-between">
           <TouristInfoCards
             img="https://peoplemakeglasgow.com/templates/people/helper/timthumb.php?w=1680&h=480&src=images/Homepage_Banners/tower_cityscapehomepagebanner.jpg"
@@ -27,15 +28,17 @@ const App = () => {
             name="London"
           />
         </div>
+
+        <Bookings />
+        <Restaurant />
+        <Footer
+          arr={[
+            "123 Fake Street, London, E1 4UD",
+            "hello@fakehotel.com",
+            "0123 456789"
+          ]}
+        />
       </div>
-      <Bookings />
-      <Footer
-        arr={[
-          "123 Fake Street, London, E1 4UD",
-          "hello@fakehotel.com",
-          "0123 456789"
-        ]}
-      />
     </div>
   );
 };
