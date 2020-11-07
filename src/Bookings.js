@@ -1,48 +1,58 @@
 import React, { useState, useEffect } from "react";
 import Search from "./Search.js";
 import SearchResults from "./SearchResults.js";
-import FakeBookings from "./data/fakeBookings.json";
+import CustomerProfile from "./CustomerProfile.js";
+// import FakeBookings from "./data/fakeBookings.json";
 
 const Bookings = () => {
-  // const [bookings, setBookings] = useState([]);
-  const [bookings, setBookings] = useState(FakeBookings);
-  const [searchInput, setSearchInput] = useState("");
+  const [dataBase, setDataBase] = useState([]);
+  const [bookings, setBookings] = useState([]);
+  const [profileId, setProfileId] = useState(null);
 
-  // useEffect(() => {
-  //   fetch(`https://cyf-react.glitch.me`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       // console.log(data);
-  //       return setBookings(data);
-  //     });
-  //   }, []);
+  useEffect(() => {
+    fetch(`https://cyf-react.glitch.me`)
+      .then(response => {
+        if (response.status >= 200 && response.status <= 299) {
+          return response.json();
+        } else {
+          throw new Error(
+            `Encountered something unexpected: ${response.status} ${
+              response.statusText
+            }`
+          );
+        }
+      })
+      .then(data => {
+        setDataBase(data);
+        setBookings(data);
+      })
+      .catch(error => {
+        console.log(`🔥 We got the error ${error} 🔥`);
+      });
+  }, []);
 
   const search = searchVal => {
-    // console.info("TO DO!", searchVal);
-    const filteredBookings = bookings.filter(
-      booking =>
-        booking.firstName === searchVal || booking.surname === searchVal
-    );
-    console.log(filteredBookings);
-    setBookings(filteredBookings);
+    if (searchVal !== "") {
+      const filteredBookings = dataBase.filter(
+        booking =>
+          booking.firstName === searchVal || booking.surname === searchVal
+      );
+      setBookings(filteredBookings);
+    } else {
+      setBookings(dataBase);
+    }
   };
 
-  const handleSearchInput = event => {
-    // console.log(event.target.value);
-    return setSearchInput(event.target.value);
+  const idUpdater = id => {
+    setProfileId(id);
   };
-
-  console.log(`render: ${bookings}`);
 
   return (
     <div className="App-content">
       <div className="container">
-        <Search
-          search={search}
-          value={searchInput}
-          onChange={handleSearchInput}
-        />
-        <SearchResults results={bookings} />
+        <Search search={search} />
+        <SearchResults results={bookings} setProfileId={idUpdater} />
+        {profileId && <CustomerProfile id={profileId} />}
       </div>
     </div>
   );

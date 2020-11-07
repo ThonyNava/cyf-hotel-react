@@ -1,8 +1,15 @@
-import React, { useState } from "react";
-import moment from "moment";
+import React from "react";
+import SearchResultsRow from "./SearchResultsRow.js";
 
 let SearchResults = props => {
-  console.log(props.results);
+  const rows = props.results.map((result, index) => (
+    <SearchResultsRow
+      result={result}
+      setProfileId={props.setProfileId}
+      key={index}
+    />
+  ));
+
   return (
     <table className="table">
       <thead>
@@ -18,36 +25,7 @@ let SearchResults = props => {
           <th scope="col">N° of nights</th>
         </tr>
       </thead>
-      <tbody>
-        {props.results.map((booking, i) => {
-          const [highlighting, setHighlighting] = useState("");
-
-          let setTheHighlighting = () => {
-            if (highlighting) {
-              setHighlighting("");
-            } else {
-              setHighlighting("bg-info text-white");
-            }
-          };
-
-          const checkIn = moment(booking.checkInDate);
-          const checkOut = moment(booking.checkOutDate);
-          return (
-            <tr key={i} onClick={setTheHighlighting} className={highlighting}>
-              <th scope="row">{booking.id}</th>
-              <td>{booking.title}</td>
-              <td>{booking.firstName}</td>
-              <td>{booking.surname}</td>
-              <td>{booking.email}</td>
-              <td>{booking.roomId}</td>
-              <td>{booking.checkInDate}</td>
-              <td>{booking.checkOutDate}</td>
-              <td>{checkOut.diff(checkIn, "days")}</td>
-              {/* <td>{booking.checkInDate.diff(booking.checkOutDate, "days")}</td> */}
-            </tr>
-          );
-        })}
-      </tbody>
+      <tbody>{rows}</tbody>
     </table>
   );
 };
