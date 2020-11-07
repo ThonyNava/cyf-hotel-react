@@ -1,6 +1,6 @@
 import React from "react";
 
-let ButtonSearch = () => (
+let ButtonSearch = props => (
   <div>
     <button className="btn btn-primary">Search</button>
   </div>
